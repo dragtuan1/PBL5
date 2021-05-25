@@ -2,7 +2,9 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from core.views import login,checkStudent,getInfo,getSchedule,getHistoryClass,getHistory,getStudentLoginAttend,getStudentResult,getStudentAttend,home
+from core.views import login,checkStudent,getInfo,getSchedule,\
+    getHistoryClass,getHistory,getStudentLoginAttend,\
+    getStudentResult,getStudentAttend,home,createStudent,updateStudent
 from rest_framework import routers
 
 # router = routers.DefaultRouter()
@@ -21,6 +23,7 @@ urlpatterns = [
     path('class/<str:id>/', getHistoryClass),
     path('schedule/<str:id>&<str:serial>/', getSchedule),
     path('class/', getHistory),
-    path('home/', home)
-    
+    path('home/', home),
+    path('student/create/',createStudent),
+    path('student/update/<str:codestudent>',updateStudent),
 ]

@@ -3,17 +3,16 @@ from django.db import models
 
 # Create your models here.
 class Student(models.Model):
-    codestudent = models.TextField(default='')
+    codestudent = models.TextField(default='',unique=True)
     name = models.TextField(default='')
     phone = models.TextField(default='')
     birthday = models.TextField(default='')
     sex = models.BooleanField(default=True)  
     baseclass = models.TextField(default='')
     status = models.IntegerField(default=0)
-    urlavatar = models.TextField(default='')
-    urlattend = models.TextField(default='')
-    schedule = models.ForeignKey('core.Schedule', on_delete=models.CASCADE,related_name='schedules',null=True)
-    attendance = models.ForeignKey('core.Attendance', on_delete=models.CASCADE,related_name='attendances',null=True)
+    urlavatar = models.TextField(default='',null=True,blank=True)
+    #schedule = models.ForeignKey('core.Schedule', on_delete=models.CASCADE,related_name='schedules',null=True,blank=True)
+    #attendance = models.ForeignKey('core.Attendance', on_delete=models.CASCADE,related_name='attendances',null=True,blank=True)
     #attendance_id = models.TextField(default='')
     def __str__(self):
         return self.name

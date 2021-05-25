@@ -4,7 +4,6 @@ from rest_framework import fields, serializers
 from .model.Student import Student
 from .model.Account import Account
 from .model.Attendance import Attendance
-from .model.Embedd import Embedd
 from .model.Info import Info
 from .model.Schedule import Schedule
 
@@ -16,11 +15,6 @@ class AccountSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
-        fields = '__all__'
-
-class EmbeddSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Embedd
         fields = '__all__'
 
 class InfoSerializer(serializers.ModelSerializer):
