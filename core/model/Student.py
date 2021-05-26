@@ -14,6 +14,6 @@ class Student(models.Model):
     urlattend = models.TextField(default='',null=True,blank=True)
     schedule = models.ForeignKey('core.Schedule', on_delete=models.CASCADE,related_name='schedules',null=True,blank=True)
     attendance = models.ForeignKey('core.Attendance', on_delete=models.CASCADE,related_name='attendances',null=True,blank=True)
-    #attendance_id = models.TextField(default='')
+    
     def __str__(self):
         return self.name
