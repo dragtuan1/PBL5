@@ -1,3 +1,4 @@
+from core.model.Image import MyFile
 from json.encoder import JSONEncoder
 from typing import Dict
 from django.http import HttpResponse
@@ -5,10 +6,12 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.db.models import Sum, Count
 
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .model.Student import Student
 from .model.Account import Account
@@ -16,7 +19,7 @@ from .model.Attendance import Attendance
 from .model.Info import Info
 from .model.Schedule import Schedule
 
-from .serializer import StudentSerializer
+from .serializer import MyFileSerializer, StudentSerializer
 from .serializer import AccountSerializer
 from .serializer import AttendanceSerializer
 from .serializer import InfoSerializer
@@ -37,10 +40,10 @@ def login(request, user,password):
     account = Account.objects.filter(user=user, password=password)
     serializer = AccountSerializer(account, many=True)
     err = json.dumps('error')
-    if len(serializer.data) == 0:
+    if account.count() == 0:
         return Response(err)
     else:     
-        return Response(serializer.data)
+        return Response(serializer.data[0]["infor"])
 
 #checkStudent
 @api_view(['GET'])
@@ -124,3 +127,20 @@ def updateStudent(request, codestudent):
         serializer.save()
         return Response(serializer.data)    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#uploadImage
+class MyFileView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request, *args, **kwargs):
+	    file_serializer = MyFileSerializer(data=request.data)
+	    if file_serializer.is_valid():
+		    file_serializer.save()
+		    return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+	    else:
+		    return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getImage(request):
+    image = MyFile.objects.all()
+    serializer = MyFileSerializer(image, many=True)
+    return Response(serializer.data)

@@ -4,7 +4,7 @@ from django.urls import path, include
 
 from core.views import login,checkStudent,getInfo,getSchedule,\
     getHistoryClass,getHistory,getStudentLoginAttend,\
-    getStudentResult,getStudentAttend,home,createStudent,updateStudent
+    getStudentResult,getStudentAttend,home,createStudent,updateStudent, MyFileView,getImage
 from rest_framework import routers
 
 # router = routers.DefaultRouter()
@@ -26,4 +26,6 @@ urlpatterns = [
     path('home/', home),
     path('student/create/',createStudent),
     path('student/update/<str:codestudent>',updateStudent),
+    path('upload/', MyFileView.as_view(), name='file-upload'),
+    path('getimage/', getImage),
 ]

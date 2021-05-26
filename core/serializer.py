@@ -6,6 +6,7 @@ from .model.Account import Account
 from .model.Attendance import Attendance
 from .model.Info import Info
 from .model.Schedule import Schedule
+from .model.Image import MyFile
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,3 +84,7 @@ class StudentAtendanceScheduleSerializer(serializers.ModelSerializer):
         model = Student
         fields = ['id','subject','room','timeattend',]
 
+class MyFileSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = MyFile
+        fields = ('file', 'description')
